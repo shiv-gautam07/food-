@@ -4,6 +4,9 @@ import { assets } from "../../assets/assets";
 import { getBaseApiUrl, saveAuthToken } from "../../misc";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import "../../firebase"; // Ensure Firebase is initialized
+import googleIcon from "../../assets/google.svg"
 
 const Login = ({ onSuccess, setCurrState }) => {
   const [email, setEmail] = useState("");
@@ -16,10 +19,12 @@ const Login = ({ onSuccess, setCurrState }) => {
     setError("");
     if (!email) {
       setError("Please provide email to login");
+      setLoading(false);
       return;
     }
     if (!password) {
       setError("Please provide password to login");
+      setLoading(false);
       return;
     }
     try {
@@ -47,9 +52,25 @@ const Login = ({ onSuccess, setCurrState }) => {
       setLoading(false);
     }
   };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const auth = getAuth();
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log("Google Login Success", user);
+      toast.success("Logged in with Google!");
+      onSuccess(false);
+    } catch (e) {
+      console.log("Google Login failed", e);
+      setError("Google Login failed!");
+    }
+  };
+
   return (
     <>
-      {error && <div class="error">{error}</div>}
+      {error && <div className="error">{error}</div>}
       <input
         type="email"
         placeholder="Your email"
@@ -67,6 +88,10 @@ const Login = ({ onSuccess, setCurrState }) => {
       <button type="button" onClick={handleLogin}>
         {loading ? "Please wait..." : "Login"}
       </button>
+      <button type="button" className="googleSignup" onClick={handleGoogleLogin}>
+        <img src={googleIcon} alt="Google icon" width="20" />
+        Log in with Google
+      </button>
       <p>
         Create a new account?{" "}
         <span onClick={() => setCurrState("Sign Up")}>Click here</span>
@@ -81,33 +106,44 @@ const Register = ({ onSuccess, setCurrState }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleRegister = async () => {
     setLoading(true);
     setError("");
+
     if (!firstName) {
       setError("Please provide first name");
+      setLoading(false);
       return;
     }
     if (!lastName) {
       setError("Please provide last name");
+      setLoading(false);
       return;
     }
     if (!email) {
       setError("Please provide email");
+      setLoading(false);
       return;
     }
     if (!password) {
       setError("Please provide password");
+      setLoading(false);
       return;
     }
     if (!confirmPassword) {
-      setError("Please provide confirm password");
+      setError("Please confirm your password");
+      setLoading(false);
       return;
     }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+
     try {
       const result = await axios.post(getBaseApiUrl() + "/signup", {
         fname: firstName,
@@ -136,8 +172,25 @@ const Register = ({ onSuccess, setCurrState }) => {
       setLoading(false);
     }
   };
+
+  const handleGoogleSignup = async () => {
+    try {
+      const auth = getAuth();
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log("Google Signup Success", user);
+      toast.success("Signed up with Google!");
+      onSuccess(false, true);
+    } catch (e) {
+      console.log("Google Signup failed", e);
+      setError("Google Signup failed!");
+    }
+  };
+
   return (
     <>
+      {error && <div className="error">{error}</div>}
       <input
         type="text"
         placeholder="Your first name"
@@ -178,9 +231,12 @@ const Register = ({ onSuccess, setCurrState }) => {
         <p>By continuing, I agree to the terms of use & privacy policy.</p>
       </div>
       <button type="button" onClick={handleRegister}>
-        Create account
+        {loading ? "Please wait..." : "Create account"}
       </button>
-
+      <button type="button" className="googleSignup" onClick={handleGoogleSignup}>
+        <img src={googleIcon} alt="Google icon" width="20" />
+        Sign up with Google
+      </button>
       <p>
         Already have an account?{" "}
         <span onClick={() => setCurrState("Login")}>Login here</span>

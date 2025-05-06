@@ -12,6 +12,7 @@
   "dependencies": {
     "@cashfreepayments/cashfree-js": "^1.0.5",
     "axios": "^1.7.9",
+    "firebase": "^11.6.1",
     "react": "^19.0.0",
     "react-chatbot-kit": "^2.2.2",
     "react-dom": "^19.0.0",

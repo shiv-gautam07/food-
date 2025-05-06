@@ -66,3 +66,27 @@
 .error {
   color: red;
 }
+.login-popup-container .googleSignup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 16px;
+  margin-top: 10px;
+  background-color: #ffffff;
+  color: #444;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.googleSignup:hover {
+  background-color: #f7f7f7;
+}
+
+.googleSignup:active {
+  background-color: #eaeaea;
+}
