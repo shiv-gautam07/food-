@@ -1,0 +1,82 @@
+.place-order {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 50px;
+  margin-top: 100px;
+}
+.place-order-left {
+  width: 100%;
+  max-width: max(30%, 500px);
+}
+.place-order-left .title {
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 50px;
+}
+.place-order-left input,
+.place-order-left textarea {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #c5c5c5;
+  border-radius: 4px;
+  outline-color: tomato;
+}
+.place-order-left .multifields {
+  display: flex;
+  gap: 10px;
+}
+.place-order-right {
+  width: 100%;
+  max-width: mac(40%, 500px);
+}
+.place-order .cart-total button {
+  margin-top: 30px;
+}
+
+.checkout-complete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkout-complete .loading {
+  color: 444;
+}
+
+.checkout-complete .confirmation-success {
+  color: green;
+  margin-bottom: 10px;
+}
+
+.checkout-complete .confirmation-failure {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.checkout-complete .order {
+  margin-top: 10px;
+}
+.checkout-complete .order .order-caption {
+  font-weight: bold;
+  color: #2b2b2b;
+}
+.checkout-complete .order .order-items {
+  list-style-type: decimal;
+  padding: 0px;
+  margin: 0px;
+  padding-left: 1rem;
+}
+
+.checkout-complete .order .order-items .order-item {
+  /* border-bottom: 1px solid #bbb; */
+  margin: 10px;
+  /* padding-bottom: 10px; */
+}
+.checkout-complete .order .order-amount {
+  font-weight: bold;
+  color: rgb(54, 53, 53);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
